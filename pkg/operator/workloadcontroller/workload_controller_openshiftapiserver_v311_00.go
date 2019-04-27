@@ -29,6 +29,8 @@ import (
 func syncServiceCatalogAPIServer_v311_00_to_latest(c ServiceCatalogAPIServerOperator, originalOperatorConfig *operatorv1.ServiceCatalogAPIServer) (bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	errors := []error{}
 	var err error
 	operatorConfig := originalOperatorConfig.DeepCopy()
@@ -146,6 +148,8 @@ func syncServiceCatalogAPIServer_v311_00_to_latest(c ServiceCatalogAPIServerOper
 func manageServiceCatalogAPIServerConfigMap_v311_00_to_latest(kubeClient kubernetes.Interface, client coreclientv1.ConfigMapsGetter, recorder events.Recorder, operatorConfig *operatorv1.ServiceCatalogAPIServer) (*corev1.ConfigMap, bool, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	configMap := resourceread.ReadConfigMapV1OrDie(v311_00_assets.MustAsset("v3.11.0/openshift-svcat-apiserver/cm.yaml"))
 	inputHashes, err := resourcehash.MultipleObjectHashStringMapForObjectReferences(kubeClient, resourcehash.NewObjectRef().ForConfigMap().InNamespace(operatorclient.TargetNamespaceName).Named("aggregator-client-ca"), resourcehash.NewObjectRef().ForConfigMap().InNamespace(operatorclient.TargetNamespaceName).Named("client-ca"), resourcehash.NewObjectRef().ForSecret().InNamespace(operatorclient.TargetNamespaceName).Named("etcd-client"), resourcehash.NewObjectRef().ForConfigMap().InNamespace(operatorclient.TargetNamespaceName).Named("etcd-serving-ca"), resourcehash.NewObjectRef().ForSecret().InNamespace(operatorclient.TargetNamespaceName).Named("serving-cert"))
 	if err != nil {
@@ -157,6 +161,8 @@ func manageServiceCatalogAPIServerConfigMap_v311_00_to_latest(kubeClient kuberne
 	return resourceapply.ApplyConfigMap(client, recorder, configMap)
 }
 func manageServiceCatalogAPIServerDaemonSet_v311_00_to_latest(client appsclientv1.DaemonSetsGetter, recorder events.Recorder, imagePullSpec string, operatorConfig *operatorv1.ServiceCatalogAPIServer, generationStatus []operatorv1.GenerationStatus, forceRollingUpdate bool) (*appsv1.DaemonSet, bool, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	required := resourceread.ReadDaemonSetV1OrDie(v311_00_assets.MustAsset("v3.11.0/openshift-svcat-apiserver/ds.yaml"))
@@ -182,6 +188,8 @@ func manageServiceCatalogAPIServerDaemonSet_v311_00_to_latest(client appsclientv
 	return resourceapply.ApplyDaemonSet(client, recorder, required, resourcemerge.ExpectedDaemonSetGeneration(required, generationStatus), forceRollingUpdate)
 }
 func manageAPIServices_v311_00_to_latest(client apiregistrationv1client.APIServicesGetter) ([]*apiregistrationv1.APIService, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	var apiServices []*apiregistrationv1.APIService

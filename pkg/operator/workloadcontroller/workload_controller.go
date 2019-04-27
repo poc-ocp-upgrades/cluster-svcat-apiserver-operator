@@ -49,6 +49,8 @@ type ServiceCatalogAPIServerOperator struct {
 func NewWorkloadController(targetImagePullSpec string, versionRecorder status.VersionGetter, operatorConfigInformer operatorv1informers.ServiceCatalogAPIServerInformer, kubeInformersForServiceCatalogAPIServerNamespace kubeinformers.SharedInformerFactory, kubeInformersForEtcdNamespace kubeinformers.SharedInformerFactory, kubeInformersForKubeAPIServerNamespace kubeinformers.SharedInformerFactory, kubeInformersForOpenShiftConfigNamespace kubeinformers.SharedInformerFactory, apiregistrationInformers apiregistrationinformers.SharedInformerFactory, configInformers configinformers.SharedInformerFactory, operatorConfigClient operatorv1client.ServiceCatalogAPIServersGetter, openshiftConfigClient openshiftconfigclientv1.ConfigV1Interface, kubeClient kubernetes.Interface, apiregistrationv1Client apiregistrationv1client.ApiregistrationV1Interface, eventRecorder events.Recorder) *ServiceCatalogAPIServerOperator {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	c := &ServiceCatalogAPIServerOperator{targetImagePullSpec: targetImagePullSpec, versionRecorder: versionRecorder, operatorConfigClient: operatorConfigClient, openshiftConfigClient: openshiftConfigClient, kubeClient: kubeClient, apiregistrationv1Client: apiregistrationv1Client, eventRecorder: eventRecorder, queue: workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "ServiceCatalogAPIServerOperator"), rateLimiter: flowcontrol.NewTokenBucketRateLimiter(0.05, 4)}
 	operatorConfigInformer.Informer().AddEventHandler(c.eventHandler())
 	kubeInformersForEtcdNamespace.Core().V1().ConfigMaps().Informer().AddEventHandler(c.eventHandler())
@@ -63,6 +65,8 @@ func NewWorkloadController(targetImagePullSpec string, versionRecorder status.Ve
 	return c
 }
 func (c ServiceCatalogAPIServerOperator) sync() error {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	operatorConfig, err := c.operatorConfigClient.ServiceCatalogAPIServers().Get("cluster", metav1.GetOptions{})
@@ -109,6 +113,8 @@ func (c ServiceCatalogAPIServerOperator) sync() error {
 func (c *ServiceCatalogAPIServerOperator) Run(workers int, stopCh <-chan struct{}) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	defer utilruntime.HandleCrash()
 	defer c.queue.ShutDown()
 	glog.Infof("Starting OpenShiftSerCatAPIServerOperator")
@@ -119,10 +125,14 @@ func (c *ServiceCatalogAPIServerOperator) Run(workers int, stopCh <-chan struct{
 func (c *ServiceCatalogAPIServerOperator) runWorker() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	for c.processNextWorkItem() {
 	}
 }
 func (c *ServiceCatalogAPIServerOperator) processNextWorkItem() bool {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	dsKey, quit := c.queue.Get()
@@ -143,6 +153,8 @@ func (c *ServiceCatalogAPIServerOperator) processNextWorkItem() bool {
 func (c *ServiceCatalogAPIServerOperator) eventHandler() cache.ResourceEventHandler {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {
 		c.queue.Add(workQueueKey)
 	}, UpdateFunc: func(old, new interface{}) {
@@ -155,6 +167,8 @@ func (c *ServiceCatalogAPIServerOperator) eventHandler() cache.ResourceEventHand
 var interestingNamespaces = sets.NewString(operatorclient.TargetNamespaceName)
 
 func (c *ServiceCatalogAPIServerOperator) namespaceEventHandler() cache.ResourceEventHandler {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return cache.ResourceEventHandlerFuncs{AddFunc: func(obj interface{}) {

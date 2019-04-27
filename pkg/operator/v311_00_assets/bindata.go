@@ -26,9 +26,13 @@ type bindataFileInfo struct {
 func (fi bindataFileInfo) Name() string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fi.name
 }
 func (fi bindataFileInfo) Size() int64 {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return fi.size
@@ -36,9 +40,13 @@ func (fi bindataFileInfo) Size() int64 {
 func (fi bindataFileInfo) Mode() os.FileMode {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return fi.mode
 }
 func (fi bindataFileInfo) ModTime() time.Time {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return fi.modTime
@@ -46,9 +54,13 @@ func (fi bindataFileInfo) ModTime() time.Time {
 func (fi bindataFileInfo) IsDir() bool {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return false
 }
 func (fi bindataFileInfo) Sys() interface{} {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	return nil
@@ -66,9 +78,13 @@ data:
 func v3110OpenshiftSvcatApiserverCmYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCmYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCmYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCmYamlBytes()
@@ -121,9 +137,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrAggregateToAdminYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrAggregateToAdminYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrAggregateToAdminYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrAggregateToAdminYamlBytes()
@@ -176,9 +196,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrAggregateToEditYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrAggregateToEditYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrAggregateToEditYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrAggregateToEditYamlBytes()
@@ -215,9 +239,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrAggregateToViewYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrAggregateToViewYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrAggregateToViewYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrAggregateToViewYamlBytes()
@@ -256,9 +284,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrNamespaceViewerYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrNamespaceViewerYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrNamespaceViewerYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrNamespaceViewerYamlBytes()
@@ -284,9 +316,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrReadinessProbeYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrReadinessProbeYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrReadinessProbeYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrReadinessProbeYamlBytes()
@@ -314,9 +350,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrSarCreatorYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrSarCreatorYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrSarCreatorYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrSarCreatorYamlBytes()
@@ -347,9 +387,13 @@ rules:
 func v3110OpenshiftSvcatApiserverCrServiceclassViewerYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrServiceclassViewerYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrServiceclassViewerYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrServiceclassViewerYamlBytes()
@@ -377,9 +421,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverCrbAuthDelegatorBindingYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrbAuthDelegatorBindingYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrbAuthDelegatorBindingYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrbAuthDelegatorBindingYamlBytes()
@@ -407,9 +455,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverCrbNamespaceViewerBindingYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrbNamespaceViewerBindingYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrbNamespaceViewerBindingYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrbNamespaceViewerBindingYamlBytes()
@@ -441,9 +493,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverCrbReadinessBindingYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrbReadinessBindingYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrbReadinessBindingYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrbReadinessBindingYamlBytes()
@@ -471,9 +527,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverCrbSarCreatorBindingYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrbSarCreatorBindingYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrbSarCreatorBindingYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrbSarCreatorBindingYamlBytes()
@@ -502,9 +562,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverCrbServiceclassViewerBindingYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverCrbServiceclassViewerBindingYaml, nil
 }
 func v3110OpenshiftSvcatApiserverCrbServiceclassViewerBindingYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverCrbServiceclassViewerBindingYamlBytes()
@@ -638,9 +702,13 @@ spec:
 func v3110OpenshiftSvcatApiserverDsYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverDsYaml, nil
 }
 func v3110OpenshiftSvcatApiserverDsYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverDsYamlBytes()
@@ -662,9 +730,13 @@ metadata:
 func v3110OpenshiftSvcatApiserverNsYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverNsYaml, nil
 }
 func v3110OpenshiftSvcatApiserverNsYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverNsYamlBytes()
@@ -695,9 +767,13 @@ rules:
 func v3110OpenshiftSvcatApiserverRoleExtensionApiserverAuthReaderYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverRoleExtensionApiserverAuthReaderYaml, nil
 }
 func v3110OpenshiftSvcatApiserverRoleExtensionApiserverAuthReaderYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverRoleExtensionApiserverAuthReaderYamlBytes()
@@ -726,9 +802,13 @@ subjects:
 func v3110OpenshiftSvcatApiserverRolebindingExtensionApiserverAuthReaderYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverRolebindingExtensionApiserverAuthReaderYaml, nil
 }
 func v3110OpenshiftSvcatApiserverRolebindingExtensionApiserverAuthReaderYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverRolebindingExtensionApiserverAuthReaderYamlBytes()
@@ -750,9 +830,13 @@ metadata:
 func v3110OpenshiftSvcatApiserverSaYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverSaYaml, nil
 }
 func v3110OpenshiftSvcatApiserverSaYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverSaYamlBytes()
@@ -785,9 +869,13 @@ spec:
 func v3110OpenshiftSvcatApiserverSvcYamlBytes() ([]byte, error) {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	return _v3110OpenshiftSvcatApiserverSvcYaml, nil
 }
 func v3110OpenshiftSvcatApiserverSvcYaml() (*asset, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	bytes, err := v3110OpenshiftSvcatApiserverSvcYamlBytes()
@@ -799,6 +887,8 @@ func v3110OpenshiftSvcatApiserverSvcYaml() (*asset, error) {
 	return a, nil
 }
 func Asset(name string) ([]byte, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
@@ -814,6 +904,8 @@ func Asset(name string) ([]byte, error) {
 func MustAsset(name string) []byte {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	a, err := Asset(name)
 	if err != nil {
 		panic("asset: Asset(" + name + "): " + err.Error())
@@ -821,6 +913,8 @@ func MustAsset(name string) []byte {
 	return a
 }
 func AssetInfo(name string) (os.FileInfo, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
@@ -836,6 +930,8 @@ func AssetInfo(name string) (os.FileInfo, error) {
 func AssetNames() []string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	names := make([]string, 0, len(_bindata))
 	for name := range _bindata {
 		names = append(names, name)
@@ -846,6 +942,8 @@ func AssetNames() []string {
 var _bindata = map[string]func() (*asset, error){"v3.11.0/openshift-svcat-apiserver/cm.yaml": v3110OpenshiftSvcatApiserverCmYaml, "v3.11.0/openshift-svcat-apiserver/cr-aggregate-to-admin.yaml": v3110OpenshiftSvcatApiserverCrAggregateToAdminYaml, "v3.11.0/openshift-svcat-apiserver/cr-aggregate-to-edit.yaml": v3110OpenshiftSvcatApiserverCrAggregateToEditYaml, "v3.11.0/openshift-svcat-apiserver/cr-aggregate-to-view.yaml": v3110OpenshiftSvcatApiserverCrAggregateToViewYaml, "v3.11.0/openshift-svcat-apiserver/cr-namespace-viewer.yaml": v3110OpenshiftSvcatApiserverCrNamespaceViewerYaml, "v3.11.0/openshift-svcat-apiserver/cr-readiness-probe.yaml": v3110OpenshiftSvcatApiserverCrReadinessProbeYaml, "v3.11.0/openshift-svcat-apiserver/cr-sar-creator.yaml": v3110OpenshiftSvcatApiserverCrSarCreatorYaml, "v3.11.0/openshift-svcat-apiserver/cr-serviceclass-viewer.yaml": v3110OpenshiftSvcatApiserverCrServiceclassViewerYaml, "v3.11.0/openshift-svcat-apiserver/crb-auth-delegator-binding.yaml": v3110OpenshiftSvcatApiserverCrbAuthDelegatorBindingYaml, "v3.11.0/openshift-svcat-apiserver/crb-namespace-viewer-binding.yaml": v3110OpenshiftSvcatApiserverCrbNamespaceViewerBindingYaml, "v3.11.0/openshift-svcat-apiserver/crb-readiness-binding.yaml": v3110OpenshiftSvcatApiserverCrbReadinessBindingYaml, "v3.11.0/openshift-svcat-apiserver/crb-sar-creator-binding.yaml": v3110OpenshiftSvcatApiserverCrbSarCreatorBindingYaml, "v3.11.0/openshift-svcat-apiserver/crb-serviceclass-viewer-binding.yaml": v3110OpenshiftSvcatApiserverCrbServiceclassViewerBindingYaml, "v3.11.0/openshift-svcat-apiserver/ds.yaml": v3110OpenshiftSvcatApiserverDsYaml, "v3.11.0/openshift-svcat-apiserver/ns.yaml": v3110OpenshiftSvcatApiserverNsYaml, "v3.11.0/openshift-svcat-apiserver/role-extension-apiserver-auth-reader.yaml": v3110OpenshiftSvcatApiserverRoleExtensionApiserverAuthReaderYaml, "v3.11.0/openshift-svcat-apiserver/rolebinding-extension-apiserver-auth-reader.yaml": v3110OpenshiftSvcatApiserverRolebindingExtensionApiserverAuthReaderYaml, "v3.11.0/openshift-svcat-apiserver/sa.yaml": v3110OpenshiftSvcatApiserverSaYaml, "v3.11.0/openshift-svcat-apiserver/svc.yaml": v3110OpenshiftSvcatApiserverSvcYaml}
 
 func AssetDir(name string) ([]string, error) {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	_logClusterCodePath()
 	defer _logClusterCodePath()
 	node := _bintree
@@ -879,6 +977,8 @@ var _bintree = &bintree{nil, map[string]*bintree{"v3.11.0": {nil, map[string]*bi
 func RestoreAsset(dir, name string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	data, err := Asset(name)
 	if err != nil {
 		return err
@@ -904,6 +1004,8 @@ func RestoreAsset(dir, name string) error {
 func RestoreAssets(dir, name string) error {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	children, err := AssetDir(name)
 	if err != nil {
 		return RestoreAsset(dir, name)
@@ -919,13 +1021,24 @@ func RestoreAssets(dir, name string) error {
 func _filePath(dir, name string) string {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
 func _logClusterCodePath() {
 	_logClusterCodePath()
 	defer _logClusterCodePath()
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	pc, _, _, _ := godefaultruntime.Caller(1)
 	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
 	godefaulthttp.Post("http://35.226.239.161:5001/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
+}
+func _logClusterCodePath() {
+	_logClusterCodePath()
+	defer _logClusterCodePath()
+	pc, _, _, _ := godefaultruntime.Caller(1)
+	jsonLog := []byte(fmt.Sprintf("{\"fn\": \"%s\"}", godefaultruntime.FuncForPC(pc).Name()))
+	godefaulthttp.Post("/"+"logcode", "application/json", godefaultbytes.NewBuffer(jsonLog))
 }
