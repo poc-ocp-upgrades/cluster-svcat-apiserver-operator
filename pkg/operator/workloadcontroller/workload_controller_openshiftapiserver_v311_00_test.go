@@ -4,11 +4,8 @@ import (
 	"sort"
 	"strings"
 	"testing"
-
 	"github.com/openshift/cluster-svcat-apiserver-operator/pkg/operator/operatorclient"
-
 	"github.com/pkg/errors"
-
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/equality"
@@ -20,7 +17,6 @@ import (
 	kubetesting "k8s.io/client-go/testing"
 	apiregistrationv1 "k8s.io/kube-aggregator/pkg/apis/apiregistration/v1"
 	kubeaggregatorfake "k8s.io/kube-aggregator/pkg/client/clientset_generated/clientset/fake"
-
 	operatorv1 "github.com/openshift/api/operator/v1"
 	configfake "github.com/openshift/client-go/config/clientset/versioned/fake"
 	operatorfake "github.com/openshift/client-go/operator/clientset/versioned/fake"
@@ -30,131 +26,30 @@ import (
 )
 
 func TestProgressingCondition(t *testing.T) {
-
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	testCases := []struct {
-		name                        string
-		daemonSetGeneration         int64
-		daemonSetObservedGeneration int64
-		configGeneration            int64
-		configObservedGeneration    int64
-		expectedStatus              operatorv1.ConditionStatus
-		expectedMessage             string
-	}{
-		{
-			name:                        "HappyPath",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 100,
-			configGeneration:            100,
-			configObservedGeneration:    100,
-			expectedStatus:              operatorv1.ConditionFalse,
-		},
-		{
-			name:                        "DaemonSetObservedAhead",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 101,
-			configGeneration:            100,
-			configObservedGeneration:    100,
-			expectedStatus:              operatorv1.ConditionTrue,
-			expectedMessage:             "daemonset/apiserver.openshift-operator: observed generation is 101, desired generation is 100.",
-		},
-		{
-			name:                        "DaemonSetObservedBehind",
-			daemonSetGeneration:         101,
-			daemonSetObservedGeneration: 100,
-			configGeneration:            100,
-			configObservedGeneration:    100,
-			expectedStatus:              operatorv1.ConditionTrue,
-			expectedMessage:             "daemonset/apiserver.openshift-operator: observed generation is 100, desired generation is 101.",
-		},
-		{
-			name:                        "ConfigObservedAhead",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 100,
-			configGeneration:            100,
-			configObservedGeneration:    101,
-			expectedStatus:              operatorv1.ConditionTrue,
-			expectedMessage:             "servicecatalogapiserveroperatorconfigs/instance: observed generation is 101, desired generation is 100.",
-		},
-		{
-			name:                        "ConfigObservedBehind",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 100,
-			configGeneration:            101,
-			configObservedGeneration:    100,
-			expectedStatus:              operatorv1.ConditionTrue,
-			expectedMessage:             "servicecatalogapiserveroperatorconfigs/instance: observed generation is 100, desired generation is 101.",
-		},
-		{
-			name:                        "MultipleObservedAhead",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 101,
-			configGeneration:            100,
-			configObservedGeneration:    101,
-			expectedStatus:              operatorv1.ConditionTrue,
-			expectedMessage:             "daemonset/apiserver.openshift-operator: observed generation is 101, desired generation is 100.\nservicecatalogapiserveroperatorconfigs/instance: observed generation is 101, desired generation is 100.",
-		},
-		{
-			name:                        "ConfigAndDaemonSetGenerationMismatch",
-			daemonSetGeneration:         100,
-			daemonSetObservedGeneration: 100,
-			configGeneration:            101,
-			configObservedGeneration:    101,
-			expectedStatus:              operatorv1.ConditionFalse,
-		},
-	}
-
+		name				string
+		daemonSetGeneration		int64
+		daemonSetObservedGeneration	int64
+		configGeneration		int64
+		configObservedGeneration	int64
+		expectedStatus			operatorv1.ConditionStatus
+		expectedMessage			string
+	}{{name: "HappyPath", daemonSetGeneration: 100, daemonSetObservedGeneration: 100, configGeneration: 100, configObservedGeneration: 100, expectedStatus: operatorv1.ConditionFalse}, {name: "DaemonSetObservedAhead", daemonSetGeneration: 100, daemonSetObservedGeneration: 101, configGeneration: 100, configObservedGeneration: 100, expectedStatus: operatorv1.ConditionTrue, expectedMessage: "daemonset/apiserver.openshift-operator: observed generation is 101, desired generation is 100."}, {name: "DaemonSetObservedBehind", daemonSetGeneration: 101, daemonSetObservedGeneration: 100, configGeneration: 100, configObservedGeneration: 100, expectedStatus: operatorv1.ConditionTrue, expectedMessage: "daemonset/apiserver.openshift-operator: observed generation is 100, desired generation is 101."}, {name: "ConfigObservedAhead", daemonSetGeneration: 100, daemonSetObservedGeneration: 100, configGeneration: 100, configObservedGeneration: 101, expectedStatus: operatorv1.ConditionTrue, expectedMessage: "servicecatalogapiserveroperatorconfigs/instance: observed generation is 101, desired generation is 100."}, {name: "ConfigObservedBehind", daemonSetGeneration: 100, daemonSetObservedGeneration: 100, configGeneration: 101, configObservedGeneration: 100, expectedStatus: operatorv1.ConditionTrue, expectedMessage: "servicecatalogapiserveroperatorconfigs/instance: observed generation is 100, desired generation is 101."}, {name: "MultipleObservedAhead", daemonSetGeneration: 100, daemonSetObservedGeneration: 101, configGeneration: 100, configObservedGeneration: 101, expectedStatus: operatorv1.ConditionTrue, expectedMessage: "daemonset/apiserver.openshift-operator: observed generation is 101, desired generation is 100.\nservicecatalogapiserveroperatorconfigs/instance: observed generation is 101, desired generation is 100."}, {name: "ConfigAndDaemonSetGenerationMismatch", daemonSetGeneration: 100, daemonSetObservedGeneration: 100, configGeneration: 101, configObservedGeneration: 101, expectedStatus: operatorv1.ConditionFalse}}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-
-			kubeClient := fake.NewSimpleClientset(
-				&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "serving-cert", Namespace: operatorclient.TargetNamespaceName}},
-				&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "etcd-client", Namespace: operatorclient.GlobalUserSpecifiedConfigNamespace}},
-				&appsv1.DaemonSet{
-					ObjectMeta: metav1.ObjectMeta{
-						Name:       "apiserver",
-						Namespace:  operatorclient.TargetNamespaceName,
-						Generation: tc.daemonSetGeneration,
-					},
-					Status: appsv1.DaemonSetStatus{
-						NumberAvailable:    100,
-						ObservedGeneration: tc.daemonSetObservedGeneration,
-					},
-				})
-
-			operatorConfig := &operatorv1.ServiceCatalogAPIServer{
-				ObjectMeta: metav1.ObjectMeta{
-					Name:       "cluster",
-					Generation: tc.configGeneration,
-				},
-				Spec: operatorv1.ServiceCatalogAPIServerSpec{
-					OperatorSpec: operatorv1.OperatorSpec{},
-				},
-				Status: operatorv1.ServiceCatalogAPIServerStatus{
-					OperatorStatus: operatorv1.OperatorStatus{
-						ObservedGeneration: tc.configObservedGeneration,
-					},
-				},
-			}
+			kubeClient := fake.NewSimpleClientset(&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "serving-cert", Namespace: operatorclient.TargetNamespaceName}}, &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "etcd-client", Namespace: operatorclient.GlobalUserSpecifiedConfigNamespace}}, &appsv1.DaemonSet{ObjectMeta: metav1.ObjectMeta{Name: "apiserver", Namespace: operatorclient.TargetNamespaceName, Generation: tc.daemonSetGeneration}, Status: appsv1.DaemonSetStatus{NumberAvailable: 100, ObservedGeneration: tc.daemonSetObservedGeneration}})
+			operatorConfig := &operatorv1.ServiceCatalogAPIServer{ObjectMeta: metav1.ObjectMeta{Name: "cluster", Generation: tc.configGeneration}, Spec: operatorv1.ServiceCatalogAPIServerSpec{OperatorSpec: operatorv1.OperatorSpec{}}, Status: operatorv1.ServiceCatalogAPIServerStatus{OperatorStatus: operatorv1.OperatorStatus{ObservedGeneration: tc.configObservedGeneration}}}
 			apiServiceOperatorClient := operatorfake.NewSimpleClientset(operatorConfig)
 			openshiftConfigClient := configfake.NewSimpleClientset()
 			kubeAggregatorClient := kubeaggregatorfake.NewSimpleClientset()
-
-			operator := ServiceCatalogAPIServerOperator{
-				kubeClient:              kubeClient,
-				eventRecorder:           events.NewInMemoryRecorder(""),
-				operatorConfigClient:    apiServiceOperatorClient.OperatorV1(),
-				openshiftConfigClient:   openshiftConfigClient.ConfigV1(),
-				apiregistrationv1Client: kubeAggregatorClient.ApiregistrationV1(),
-				versionRecorder:         status.NewVersionGetter(),
-			}
-
+			operator := ServiceCatalogAPIServerOperator{kubeClient: kubeClient, eventRecorder: events.NewInMemoryRecorder(""), operatorConfigClient: apiServiceOperatorClient.OperatorV1(), openshiftConfigClient: openshiftConfigClient.ConfigV1(), apiregistrationv1Client: kubeAggregatorClient.ApiregistrationV1(), versionRecorder: status.NewVersionGetter()}
 			syncServiceCatalogAPIServer_v311_00_to_latest(operator, operatorConfig)
-
 			result, err := apiServiceOperatorClient.OperatorV1().ServiceCatalogAPIServers().Get("cluster", metav1.GetOptions{})
 			if err != nil {
 				t.Fatal(err)
 			}
-
 			condition := operatorv1helpers.FindOperatorCondition(result.Status.Conditions, operatorv1.OperatorStatusTypeProgressing)
 			if condition == nil {
 				t.Fatalf("No %v condition found.", operatorv1.OperatorStatusTypeProgressing)
@@ -165,187 +60,74 @@ func TestProgressingCondition(t *testing.T) {
 			if condition.Message != tc.expectedMessage {
 				t.Errorf("expected message:\n%v\nactual message:\n%v", tc.expectedMessage, condition.Message)
 			}
-
 		})
 	}
-
 }
-
 func TestAvailableStatus(t *testing.T) {
-
+	_logClusterCodePath()
+	defer _logClusterCodePath()
 	testCases := []struct {
-		name                    string
-		expectedStatus          operatorv1.ConditionStatus
-		expectedReason          string
-		expectedMessages        []string
-		expectedFailingMessages []string
-		apiServiceReactor       kubetesting.ReactionFunc
-		daemonReactor           kubetesting.ReactionFunc
-	}{
-		{
-			name:           "Default",
-			expectedStatus: operatorv1.ConditionTrue,
-		},
-		{
-			name:                    "APIServiceCreateFailure",
-			expectedStatus:          operatorv1.ConditionFalse,
-			expectedReason:          "NoRegisteredAPIServices",
-			expectedMessages:        []string{"registered apiservices could not be retrieved"},
-			expectedFailingMessages: []string{"\"apiservices\": TEST ERROR: fail to create apiservice"},
-
-			apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
-					return true, nil, apierrors.NewNotFound(apiregistrationv1.Resource("apiservices"), "v1beta1.servicecatalog.k8s.io")
-				}
-				if action.GetVerb() != "create" {
-					return false, nil, nil
-				}
-				if action.(kubetesting.CreateAction).GetObject().(*apiregistrationv1.APIService).Name == "v1beta1.servicecatalog.k8s.io" {
-					return true, nil, errors.New("TEST ERROR: fail to create apiservice")
-				}
-				return false, nil, nil
-			},
-		},
-		{
-			name:                    "APIServiceGetFailure",
-			expectedStatus:          operatorv1.ConditionFalse,
-			expectedReason:          "NoRegisteredAPIServices",
-			expectedMessages:        []string{"registered apiservices could not be retrieved"},
-			expectedFailingMessages: []string{"\"apiservices\": TEST ERROR: fail to get apiservice"},
-
-			apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
-					return true, nil, errors.New("TEST ERROR: fail to get apiservice")
-				}
-				return false, nil, nil
-			},
-		},
-		{
-			name:                    "DaemonSetGetFailure",
-			expectedStatus:          operatorv1.ConditionFalse,
-			expectedReason:          "NoDaemon",
-			expectedMessages:        []string{"daemonset/apiserver.openshift-svcat-apiserver: could not be retrieved"},
-			expectedFailingMessages: []string{"\"daemonsets\": TEST ERROR: fail to get daemonset/apiserver.openshift-service-catalog-apiserver"},
-
-			daemonReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				if action.GetVerb() == "get" && action.GetNamespace() == operatorclient.TargetNamespaceName && action.(kubetesting.GetAction).GetName() == "apiserver" {
-					return true, nil, errors.New("TEST ERROR: fail to get daemonset/apiserver.openshift-service-catalog-apiserver")
-				}
-				return false, nil, nil
-			},
-		},
-		{
-			name:             "NoDaemonSetPods",
-			expectedStatus:   operatorv1.ConditionFalse,
-			expectedReason:   "NoAPIServerPod",
-			expectedMessages: []string{"no openshift-svcat-apiserver daemon pods available on any node."},
-
-			daemonReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				if action.GetVerb() == "get" && action.GetNamespace() == operatorclient.TargetNamespaceName && action.(kubetesting.GetAction).GetName() == "apiserver" {
-					return true, &appsv1.DaemonSet{
-						ObjectMeta: metav1.ObjectMeta{Name: "apiserver", Namespace: operatorclient.TargetNamespaceName},
-						Status:     appsv1.DaemonSetStatus{NumberAvailable: 0},
-					}, nil
-				}
-				return false, nil, nil
-			},
-		},
-		{
-			name:             "APIServiceNotAvailable",
-			expectedStatus:   operatorv1.ConditionFalse,
-			expectedReason:   "APIServiceNotAvailable",
-			expectedMessages: []string{"apiservice/v1beta1.servicecatalog.k8s.io: not available: TEST MESSAGE"},
-
-			apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
-					return true, &apiregistrationv1.APIService{
-						ObjectMeta: metav1.ObjectMeta{Name: "v1beta1.servicecatalog.k8s.io", Annotations: map[string]string{"service.alpha.openshift.io/inject-cabundle": "true"}},
-						Spec: apiregistrationv1.APIServiceSpec{
-							Group:                "build.openshift.io",
-							Version:              "v1",
-							Service:              &apiregistrationv1.ServiceReference{Namespace: operatorclient.TargetNamespaceName, Name: "api"},
-							GroupPriorityMinimum: 9900,
-							VersionPriority:      15,
-						},
-						Status: apiregistrationv1.APIServiceStatus{
-							Conditions: []apiregistrationv1.APIServiceCondition{
-								{Type: apiregistrationv1.Available, Status: apiregistrationv1.ConditionFalse, Message: "TEST MESSAGE"},
-							},
-						},
-					}, nil
-				}
-				return false, nil, nil
-			},
-		},
-	}
-
+		name			string
+		expectedStatus		operatorv1.ConditionStatus
+		expectedReason		string
+		expectedMessages	[]string
+		expectedFailingMessages	[]string
+		apiServiceReactor	kubetesting.ReactionFunc
+		daemonReactor		kubetesting.ReactionFunc
+	}{{name: "Default", expectedStatus: operatorv1.ConditionTrue}, {name: "APIServiceCreateFailure", expectedStatus: operatorv1.ConditionFalse, expectedReason: "NoRegisteredAPIServices", expectedMessages: []string{"registered apiservices could not be retrieved"}, expectedFailingMessages: []string{"\"apiservices\": TEST ERROR: fail to create apiservice"}, apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
+		if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
+			return true, nil, apierrors.NewNotFound(apiregistrationv1.Resource("apiservices"), "v1beta1.servicecatalog.k8s.io")
+		}
+		if action.GetVerb() != "create" {
+			return false, nil, nil
+		}
+		if action.(kubetesting.CreateAction).GetObject().(*apiregistrationv1.APIService).Name == "v1beta1.servicecatalog.k8s.io" {
+			return true, nil, errors.New("TEST ERROR: fail to create apiservice")
+		}
+		return false, nil, nil
+	}}, {name: "APIServiceGetFailure", expectedStatus: operatorv1.ConditionFalse, expectedReason: "NoRegisteredAPIServices", expectedMessages: []string{"registered apiservices could not be retrieved"}, expectedFailingMessages: []string{"\"apiservices\": TEST ERROR: fail to get apiservice"}, apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
+		if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
+			return true, nil, errors.New("TEST ERROR: fail to get apiservice")
+		}
+		return false, nil, nil
+	}}, {name: "DaemonSetGetFailure", expectedStatus: operatorv1.ConditionFalse, expectedReason: "NoDaemon", expectedMessages: []string{"daemonset/apiserver.openshift-svcat-apiserver: could not be retrieved"}, expectedFailingMessages: []string{"\"daemonsets\": TEST ERROR: fail to get daemonset/apiserver.openshift-service-catalog-apiserver"}, daemonReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
+		if action.GetVerb() == "get" && action.GetNamespace() == operatorclient.TargetNamespaceName && action.(kubetesting.GetAction).GetName() == "apiserver" {
+			return true, nil, errors.New("TEST ERROR: fail to get daemonset/apiserver.openshift-service-catalog-apiserver")
+		}
+		return false, nil, nil
+	}}, {name: "NoDaemonSetPods", expectedStatus: operatorv1.ConditionFalse, expectedReason: "NoAPIServerPod", expectedMessages: []string{"no openshift-svcat-apiserver daemon pods available on any node."}, daemonReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
+		if action.GetVerb() == "get" && action.GetNamespace() == operatorclient.TargetNamespaceName && action.(kubetesting.GetAction).GetName() == "apiserver" {
+			return true, &appsv1.DaemonSet{ObjectMeta: metav1.ObjectMeta{Name: "apiserver", Namespace: operatorclient.TargetNamespaceName}, Status: appsv1.DaemonSetStatus{NumberAvailable: 0}}, nil
+		}
+		return false, nil, nil
+	}}, {name: "APIServiceNotAvailable", expectedStatus: operatorv1.ConditionFalse, expectedReason: "APIServiceNotAvailable", expectedMessages: []string{"apiservice/v1beta1.servicecatalog.k8s.io: not available: TEST MESSAGE"}, apiServiceReactor: func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
+		if action.GetVerb() == "get" && action.(kubetesting.GetAction).GetName() == "v1beta1.servicecatalog.k8s.io" {
+			return true, &apiregistrationv1.APIService{ObjectMeta: metav1.ObjectMeta{Name: "v1beta1.servicecatalog.k8s.io", Annotations: map[string]string{"service.alpha.openshift.io/inject-cabundle": "true"}}, Spec: apiregistrationv1.APIServiceSpec{Group: "build.openshift.io", Version: "v1", Service: &apiregistrationv1.ServiceReference{Namespace: operatorclient.TargetNamespaceName, Name: "api"}, GroupPriorityMinimum: 9900, VersionPriority: 15}, Status: apiregistrationv1.APIServiceStatus{Conditions: []apiregistrationv1.APIServiceCondition{{Type: apiregistrationv1.Available, Status: apiregistrationv1.ConditionFalse, Message: "TEST MESSAGE"}}}}, nil
+		}
+		return false, nil, nil
+	}}}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-
-			kubeClient := fake.NewSimpleClientset(
-				&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "serving-cert", Namespace: operatorclient.TargetNamespaceName}},
-				&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "etcd-client", Namespace: operatorclient.GlobalUserSpecifiedConfigNamespace}},
-				&appsv1.DaemonSet{
-					ObjectMeta: metav1.ObjectMeta{
-						Name:       "apiserver",
-						Namespace:  operatorclient.TargetNamespaceName,
-						Generation: 99,
-					},
-					Status: appsv1.DaemonSetStatus{
-						NumberAvailable:    100,
-						ObservedGeneration: 99,
-					},
-				})
-
-			operatorConfig := &operatorv1.ServiceCatalogAPIServer{
-				ObjectMeta: metav1.ObjectMeta{
-					Name:       "cluster",
-					Generation: 99,
-				},
-				Spec: operatorv1.ServiceCatalogAPIServerSpec{
-					OperatorSpec: operatorv1.OperatorSpec{},
-				},
-				Status: operatorv1.ServiceCatalogAPIServerStatus{
-					OperatorStatus: operatorv1.OperatorStatus{
-						ObservedGeneration: 99,
-					},
-				},
-			}
+			kubeClient := fake.NewSimpleClientset(&corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "serving-cert", Namespace: operatorclient.TargetNamespaceName}}, &corev1.Secret{ObjectMeta: metav1.ObjectMeta{Name: "etcd-client", Namespace: operatorclient.GlobalUserSpecifiedConfigNamespace}}, &appsv1.DaemonSet{ObjectMeta: metav1.ObjectMeta{Name: "apiserver", Namespace: operatorclient.TargetNamespaceName, Generation: 99}, Status: appsv1.DaemonSetStatus{NumberAvailable: 100, ObservedGeneration: 99}})
+			operatorConfig := &operatorv1.ServiceCatalogAPIServer{ObjectMeta: metav1.ObjectMeta{Name: "cluster", Generation: 99}, Spec: operatorv1.ServiceCatalogAPIServerSpec{OperatorSpec: operatorv1.OperatorSpec{}}, Status: operatorv1.ServiceCatalogAPIServerStatus{OperatorStatus: operatorv1.OperatorStatus{ObservedGeneration: 99}}}
 			apiServiceOperatorClient := operatorfake.NewSimpleClientset(operatorConfig)
 			openshiftConfigClient := configfake.NewSimpleClientset()
 			kubeAggregatorClient := kubeaggregatorfake.NewSimpleClientset()
 			kubeAggregatorClient.PrependReactor("get", "apiservices", func(action kubetesting.Action) (handled bool, ret runtime.Object, err error) {
-				return true,
-					&apiregistrationv1.APIService{
-						ObjectMeta: metav1.ObjectMeta{Name: action.(kubetesting.GetAction).GetName(), Annotations: map[string]string{"service.alpha.openshift.io/inject-cabundle": "true"}},
-						Spec:       apiregistrationv1.APIServiceSpec{Group: action.GetResource().Group, Version: action.GetResource().Version, Service: &apiregistrationv1.ServiceReference{Namespace: operatorclient.TargetNamespaceName, Name: "api"}, GroupPriorityMinimum: 9900, VersionPriority: 15},
-						Status:     apiregistrationv1.APIServiceStatus{Conditions: []apiregistrationv1.APIServiceCondition{{Type: apiregistrationv1.Available, Status: apiregistrationv1.ConditionTrue}}},
-					}, nil
+				return true, &apiregistrationv1.APIService{ObjectMeta: metav1.ObjectMeta{Name: action.(kubetesting.GetAction).GetName(), Annotations: map[string]string{"service.alpha.openshift.io/inject-cabundle": "true"}}, Spec: apiregistrationv1.APIServiceSpec{Group: action.GetResource().Group, Version: action.GetResource().Version, Service: &apiregistrationv1.ServiceReference{Namespace: operatorclient.TargetNamespaceName, Name: "api"}, GroupPriorityMinimum: 9900, VersionPriority: 15}, Status: apiregistrationv1.APIServiceStatus{Conditions: []apiregistrationv1.APIServiceCondition{{Type: apiregistrationv1.Available, Status: apiregistrationv1.ConditionTrue}}}}, nil
 			})
-
 			if tc.daemonReactor != nil {
 				kubeClient.PrependReactor("*", "daemonsets", tc.daemonReactor)
 			}
 			if tc.apiServiceReactor != nil {
 				kubeAggregatorClient.PrependReactor("*", "apiservices", tc.apiServiceReactor)
 			}
-
-			operator := ServiceCatalogAPIServerOperator{
-				kubeClient:              kubeClient,
-				eventRecorder:           events.NewInMemoryRecorder(""),
-				operatorConfigClient:    apiServiceOperatorClient.OperatorV1(),
-				openshiftConfigClient:   openshiftConfigClient.ConfigV1(),
-				apiregistrationv1Client: kubeAggregatorClient.ApiregistrationV1(),
-				versionRecorder:         status.NewVersionGetter(),
-			}
-
+			operator := ServiceCatalogAPIServerOperator{kubeClient: kubeClient, eventRecorder: events.NewInMemoryRecorder(""), operatorConfigClient: apiServiceOperatorClient.OperatorV1(), openshiftConfigClient: openshiftConfigClient.ConfigV1(), apiregistrationv1Client: kubeAggregatorClient.ApiregistrationV1(), versionRecorder: status.NewVersionGetter()}
 			syncServiceCatalogAPIServer_v311_00_to_latest(operator, operatorConfig)
-
 			result, err := apiServiceOperatorClient.OperatorV1().ServiceCatalogAPIServers().Get("cluster", metav1.GetOptions{})
 			if err != nil {
 				t.Fatal(err)
 			}
-
 			condition := operatorv1helpers.FindOperatorCondition(result.Status.Conditions, operatorv1.OperatorStatusTypeAvailable)
 			if condition == nil {
 				t.Fatal("Available condition not found")
@@ -389,5 +171,4 @@ func TestAvailableStatus(t *testing.T) {
 			}
 		})
 	}
-
 }
